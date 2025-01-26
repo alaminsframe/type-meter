@@ -44,7 +44,7 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={twMerge(
-      "flex w-full  items-center justify-between whitespace-nowrap rounded border border-dark-300 bg-transparent  px-4 py-2 text-sm text-dark-800 placeholder:text-dark-300 focus:border-dark-500 focus:outline-none focus:ring-0 disabled:cursor-not-allowed disabled:opacity-50",
+      "flex w-full  items-center justify-between whitespace-nowrap rounded border border-dark-300 bg-transparent px-4 py-2 text-sm text-dark-800 placeholder:text-dark-300 focus:border-dark-500 focus:outline-none focus:ring-0 disabled:cursor-not-allowed disabled:opacity-50",
       className
     )}
     {...props}
