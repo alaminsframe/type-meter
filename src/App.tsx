@@ -10,10 +10,20 @@ function App() {
     <main className="bg-slate-100 h-screen flex items-center justify-center p-4 md:p-6">
       <section className="border py-4 md:py-6 px-2 md:px-6 rounded-lg bg-white w-full max-w-4xl">
         <div className="md:flex space-y-5 md:space-y-0">
-          <h1 className="text-center text-xl font-semibold">Typing Speed Calculator</h1>
-          <div className="md:ms-auto flex items-center justify-center gap-2">
+          <h1 className="text-center text-xl font-semibold">
+            Typing Speed Calculator
+            <div className="flex justify-center md:justify-start items-center space-x-1.5 mt-1">
+              <div className="w-1.5 h-1.5 bg-black rounded-full animate-bounce delay-0"></div>
+              <div className="w-1.5 h-1.5 bg-red-600 rounded-full animate-bounce delay-200"></div>
+              <div className="w-1.5 h-1.5 bg-red-600 rounded-full animate-bounce delay-400"></div>
+              <div className="w-1.5 h-1.5 bg-red-600 rounded-full animate-bounce delay-600"></div>
+            </div>
+
+            {/* <span className="block h-0.5 w-1/6 bg-red-600  mt-1"></span> */}
+          </h1>
+          <div className="md:ms-auto flex items-center justify-center gap-6 md:gap-2">
             <Select>
-              <Select.Trigger className="w-32">
+              <Select.Trigger className="w-20 md:w-32">
                 <Select.Value placeholder="Select" />
               </Select.Trigger>
               <Select.Content className="p-1 md:p-2">
@@ -23,7 +33,7 @@ function App() {
               </Select.Content>
             </Select>
             <Button className="inline-flex items-center gap-2">
-              <FiRefreshCw size={18} />
+              <FiRefreshCw className="text-sm md:text-lg" />
               Start
             </Button>
           </div>

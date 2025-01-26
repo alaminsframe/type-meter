@@ -44,7 +44,7 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={twMerge(
-      "flex w-full  items-center justify-between whitespace-nowrap rounded border border-dark-300 bg-transparent px-4 py-2 text-sm text-dark-800 placeholder:text-dark-300 focus:border-dark-500 focus:outline-none focus:ring-0 disabled:cursor-not-allowed disabled:opacity-50",
+      "flex w-full  items-center justify-between whitespace-nowrap rounded border border-dark-300 bg-transparent px-2 md:px-4 py-1.5 md:py-2 text-sm text-dark-800 placeholder:text-dark-300 focus:border-dark-500 focus:outline-none focus:ring-0 disabled:cursor-not-allowed disabled:opacity-50",
       className
     )}
     {...props}
@@ -114,7 +114,7 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={twMerge(
-      "relative flex w-full cursor-pointer hover:bg-slate-100 transition duration-150 items-center rounded py-2 px-4 pe-2 text-sm text-dark-800 outline-none focus:bg-dark-100 focus:text-dark-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      "relative flex w-full cursor-pointer hover:bg-slate-100 transition duration-150 items-center rounded py-1.5 md:py-2 px-2 md:px-4 pe-2 text-sm text-dark-800 outline-none focus:bg-dark-100 focus:text-dark-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       className
     )}
     {...props}
