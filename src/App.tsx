@@ -1,21 +1,39 @@
 import { useState } from "react";
+import { useRef } from "react";
 import { FiRefreshCw } from "react-icons/fi";
 import { LuTimer } from "react-icons/lu";
 import Button from "./components/button";
 import Select from "./components/select";
 import SummaryCard from "./components/summary-card";
 import Textarea from "./components/textarea";
+import { twMerge } from "tailwind-merge";
 
 function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [duration, setDuration] = useState(60);
   const [value, setValue] = useState("");
   const [timeLeft, setTimeLeft] = useState(duration);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const startTyping = () =>{
     setIsRunning(true)
+    setTimeLeft(duration)
+
+    intervalRef.current = setInterval( () => {
+      setTimeLeft( (prev)=> {
+        if (prev === 0) {
+          reset();
+          return 0;
+        }
+        return prev-1;
+      });
+    },1000)
   }
   const reset = ()=>{
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current)
+    }
+    setTimeLeft(duration)
     setValue("")
     setIsRunning(false)
   }
@@ -40,7 +58,7 @@ function App() {
   }
   
   
-  //console.log(timer);
+  console.log(value);
   return (
     <main className="bg-slate-100 h-screen flex items-center justify-center p-4 md:p-6">
       <section className="border py-4 md:py-6 px-2 md:px-6 rounded-lg bg-white w-full max-w-4xl">
@@ -58,8 +76,9 @@ function App() {
             <Select 
               value={duration.toString()}
               onValueChange={(value) => setDuration(parseInt(value))}
+              
             >
-              <Select.Trigger className="w-24 md:w-32">
+              <Select.Trigger className="w-24 md:w-28">
                 <Select.Value placeholder="Select" />
               </Select.Trigger>
               <Select.Content className="p-1 md:p-2">
@@ -69,10 +88,14 @@ function App() {
               </Select.Content>
             </Select>
             <Button 
-              className="inline-flex items-center gap-2"
+              className={twMerge("inline-flex items-center gap-2",
+                isRunning
+                ?"bg-blue-700"
+                :""
+              )}
               onClick={isRunning ? reset : startTyping}
             >
-              <FiRefreshCw className="text-sm md:text-lg" />
+              <FiRefreshCw className={twMerge("text-sm md:text-lg",isRunning?"block":"hidden")} />
               {isRunning ? 'Reset' : 'Start'}
             </Button>
           </div>
@@ -80,8 +103,7 @@ function App() {
         <div className="flex items-center gap-1 md:gap-2 mt-4 justify-center">
           <LuTimer className="text-2xl md:text-3xl"/>
           <span className="text-lg md:text-xl font-semibold">
-            
-            {formatDuration(timeLeft)}
+            {isRunning? formatDuration(timeLeft):formatDuration(duration)}
           </span>
         </div>
         <div className="p-3 md:p-6 mt-4 bg-slate-50 rounded-lg">
