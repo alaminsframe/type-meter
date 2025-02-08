@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { FiRefreshCw } from "react-icons/fi";
 import { LuTimer } from "react-icons/lu";
 import Button from "./components/button";
@@ -6,6 +7,40 @@ import SummaryCard from "./components/summary-card";
 import Textarea from "./components/textarea";
 
 function App() {
+  const [isRunning, setIsRunning] = useState(false);
+  const [duration, setDuration] = useState(60);
+  const [value, setValue] = useState("");
+  const [timeLeft, setTimeLeft] = useState(duration);
+
+  const startTyping = () =>{
+    setIsRunning(true)
+  }
+  const reset = ()=>{
+    setValue("")
+    setIsRunning(false)
+  }
+
+  // const timer = ()=>{
+  //   setInterval( () => {
+  //     setTimeLeft( (prev)=> {
+  //       return prev-1;
+  //     });
+  //   },1000)
+  //   if (value !== null) {
+  //     formatDuration(timeLeft)
+  //   }else{
+  //     formatDuration(duration)
+  //   }
+  // }
+
+  const formatDuration = (duration:number)=>{
+    return(
+      Math.floor(duration/60) + ":" + (duration%60).toString().padStart(2,"0")
+    )
+  }
+  
+  
+  //console.log(timer);
   return (
     <main className="bg-slate-100 h-screen flex items-center justify-center p-4 md:p-6">
       <section className="border py-4 md:py-6 px-2 md:px-6 rounded-lg bg-white w-full max-w-4xl">
@@ -18,29 +53,36 @@ function App() {
               <div className="w-1.5 h-1.5 bg-red-600 rounded-full animate-bounce"></div>
               <div className="w-1.5 h-1.5 bg-red-600 rounded-full animate-bounce"></div>
             </div>
-
-            {/* <span className="block h-0.5 w-1/6 bg-red-600  mt-1"></span> */}
           </h1>
           <div className="md:ms-auto flex items-center justify-center gap-6 md:gap-2">
-            <Select>
-              <Select.Trigger className="w-20 md:w-32">
+            <Select 
+              value={duration.toString()}
+              onValueChange={(value) => setDuration(parseInt(value))}
+            >
+              <Select.Trigger className="w-24 md:w-32">
                 <Select.Value placeholder="Select" />
               </Select.Trigger>
               <Select.Content className="p-1 md:p-2">
-                <Select.Item value="1">1 Minute</Select.Item>
-                <Select.Item value="2">2 Minutes</Select.Item>
-                <Select.Item value="5">5 Minutes</Select.Item>
+                <Select.Item value="60">1 Minute</Select.Item>
+                <Select.Item value="120">2 Minutes</Select.Item>
+                <Select.Item value="300">5 Minutes</Select.Item>
               </Select.Content>
             </Select>
-            <Button className="inline-flex items-center gap-2">
+            <Button 
+              className="inline-flex items-center gap-2"
+              onClick={isRunning ? reset : startTyping}
+            >
               <FiRefreshCw className="text-sm md:text-lg" />
-              Start
+              {isRunning ? 'Reset' : 'Start'}
             </Button>
           </div>
         </div>
         <div className="flex items-center gap-1 md:gap-2 mt-4 justify-center">
           <LuTimer className="text-2xl md:text-3xl"/>
-          <span className="text-lg md:text-xl font-semibold">1:00</span>
+          <span className="text-lg md:text-xl font-semibold">
+            
+            {formatDuration(timeLeft)}
+          </span>
         </div>
         <div className="p-3 md:p-6 mt-4 bg-slate-50 rounded-lg">
           <p className="text-sm md:text-base text-slate-500 text-justify">
@@ -55,6 +97,8 @@ function App() {
           className="mt-4"
           rows={3}
           placeholder="Type to begin the test"
+          value={value}
+          onChange={(e)=>setValue(e.target.value)}
           //disabled
         />
         <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
